@@ -35,6 +35,11 @@ const ProductPage: React.FC = () => {
 
   return (
     <Container>
+      <Box marginTop={2} marginBottom={2}>
+        <Button variant="outlined" onClick={() => navigate('/')}>
+          Home
+        </Button>
+      </Box>
       <Typography variant="h4" gutterBottom>
         {product.name}
       </Typography>

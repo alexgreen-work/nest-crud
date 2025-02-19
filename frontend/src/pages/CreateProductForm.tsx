@@ -108,15 +108,16 @@ const ProductFormPage: React.FC = () => {
 
   return (
     <Container>
+      <Box mt={2} mb={2}>
+        <Button variant="outlined" onClick={() => navigate('/')}>
+          Home
+        </Button>
+      </Box>
+
       <Typography variant="h4" gutterBottom>
         {isEditMode ? 'Edit Product' : 'Add Product'}
       </Typography>
-      <Box
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}
-        noValidate
-        sx={{ mt: 2 }}
-      >
+      <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 2 }}>
         <TextField
           {...register('name')}
           label="Name"
