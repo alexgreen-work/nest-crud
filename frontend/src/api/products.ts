@@ -30,8 +30,12 @@ export interface PaginatedProducts {
   count: number;
 }
 
-export const fetchProducts = async (params: ProductQueryParams): Promise<PaginatedProducts> => {
-  const response = await axios.get<PaginatedProducts>(`${API_URL}/products`, { params });
+export const fetchProducts = async (
+  params: ProductQueryParams,
+): Promise<PaginatedProducts> => {
+  const response = await axios.get<PaginatedProducts>(`${API_URL}/products`, {
+    params,
+  });
   return response.data;
 };
 
@@ -45,7 +49,10 @@ export const createProduct = async (data: FormData): Promise<Product> => {
   return response.data;
 };
 
-export const updateProduct = async (id: number, data: FormData): Promise<Product> => {
+export const updateProduct = async (
+  id: number,
+  data: FormData,
+): Promise<Product> => {
   const response = await axios.put<Product>(`${API_URL}/products/${id}`, data);
   return response.data;
 };

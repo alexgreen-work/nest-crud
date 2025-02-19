@@ -31,7 +31,7 @@ async function seedProducts() {
   }
 }
 
-seedProducts().catch((error) => {
+seedProducts().catch(error => {
   console.error('Unexpected error during seeding:', error);
   process.exit(1);
 });

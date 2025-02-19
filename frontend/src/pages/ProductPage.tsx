@@ -9,11 +9,13 @@ const ProductPage: React.FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: product, isLoading, error } = useQuery<Product>(
-    ['product', id],
-    () => fetchProduct(Number(id)),
-    { enabled: !!id }
-  );
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useQuery<Product>(['product', id], () => fetchProduct(Number(id)), {
+    enabled: !!id,
+  });
 
   const deleteMutation = useMutation(() => deleteProduct(Number(id)), {
     onSuccess: () => {
@@ -39,11 +41,17 @@ const ProductPage: React.FC = () => {
       <Typography variant="body1">{product.description}</Typography>
       <Typography variant="body2">Price: {product.price}</Typography>
       {product.discountPrice && (
-        <Typography variant="body2">Discount Price: {product.discountPrice}</Typography>
+        <Typography variant="body2">
+          Discount Price: {product.discountPrice}
+        </Typography>
       )}
       <Typography variant="body2">SKU: {product.sku}</Typography>
       {product.photo && (
-        <img src={`http://localhost:3000/uploads/${product.photo}`} alt={`${product.name} photo`} width={200} />
+        <img
+          src={`http://localhost:3000/uploads/${product.photo}`}
+          alt={`${product.name} photo`}
+          width={200}
+        />
       )}
       <Box marginTop={2}>
         <Button

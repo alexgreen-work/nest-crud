@@ -18,7 +18,7 @@ async function rollbackProducts() {
   }
 }
 
-rollbackProducts().catch((error) => {
+rollbackProducts().catch(error => {
   console.error('Unexpected error during rollback:', error);
   process.exit(1);
 });

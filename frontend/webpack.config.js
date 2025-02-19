@@ -53,9 +53,9 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),
-      favicon: "./public/favicon.ico",
-      filename: "index.html",
-      manifest: "./public/manifest.json"
+      favicon: './public/favicon.ico',
+      filename: 'index.html',
+      manifest: './public/manifest.json',
     }),
   ],
 };

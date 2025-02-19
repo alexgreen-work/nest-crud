@@ -3,7 +3,14 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Container, TextField, Button, Box, Typography, colors } from '@mui/material';
+import {
+  Container,
+  TextField,
+  Button,
+  Box,
+  Typography,
+  colors,
+} from '@mui/material';
 import { createProduct, updateProduct, fetchProduct } from '../api/products';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -45,26 +52,22 @@ const ProductFormPage: React.FC = () => {
   });
 
   // Если редактирование, получаем продукт и заполняем форму
-  useQuery(
-    ['product', id],
-    () => fetchProduct(Number(id)),
-    {
-      enabled: isEditMode,
-      onSuccess: (data) => {
-        reset({
-          name: data.name,
-          description: data.description || '',
-          price: data.price || 0,
-          discountPrice: data.discountPrice || 0,
-          sku: data.sku,
-          photoFile: undefined,
-        });
-        if (data.photo) {
-          setCurrentPhoto(data.photo);
-        }
-      },
-    }
-  );
+  useQuery(['product', id], () => fetchProduct(Number(id)), {
+    enabled: isEditMode,
+    onSuccess: data => {
+      reset({
+        name: data.name,
+        description: data.description || '',
+        price: data.price || 0,
+        discountPrice: data.discountPrice || 0,
+        sku: data.sku,
+        photoFile: undefined,
+      });
+      if (data.photo) {
+        setCurrentPhoto(data.photo);
+      }
+    },
+  });
 
   const mutation = useMutation(
     (formData: FormData) => {
@@ -79,28 +82,28 @@ const ProductFormPage: React.FC = () => {
         queryClient.invalidateQueries(['products']);
         navigate('/');
       },
-      onError: (e) => {
-        console.log({e})
+      onError: e => {
+        console.log({ e });
         setErrorText(e?.response?.data?.error?.message);
-      }
-    }
+      },
+    },
   );
 
   const onSubmit = (data: ProductFormData) => {
-      const formData = new FormData();
-      formData.append('name', data.name);
-      formData.append('description', data.description || '');
-      formData.append('price', data.price.toString());
-      if (data.discountPrice !== undefined) {
-        formData.append('discountPrice', data.discountPrice.toString());
-      }
-      formData.append('sku', data.sku);
-      
-      if (data.photoFile && data.photoFile.length > 0) {
-        formData.append('photo', data.photoFile[0]);
-      }
-      
-      mutation.mutate(formData);
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('description', data.description || '');
+    formData.append('price', data.price.toString());
+    if (data.discountPrice !== undefined) {
+      formData.append('discountPrice', data.discountPrice.toString());
+    }
+    formData.append('sku', data.sku);
+
+    if (data.photoFile && data.photoFile.length > 0) {
+      formData.append('photo', data.photoFile[0]);
+    }
+
+    mutation.mutate(formData);
   };
 
   return (
@@ -108,7 +111,12 @@ const ProductFormPage: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         {isEditMode ? 'Edit Product' : 'Add Product'}
       </Typography>
-      <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 2 }}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+        sx={{ mt: 2 }}
+      >
         <TextField
           {...register('name')}
           label="Name"
@@ -163,7 +171,11 @@ const ProductFormPage: React.FC = () => {
         {isEditMode && currentPhoto && (
           <Box my={2}>
             <Typography variant="subtitle1">Current Photo:</Typography>
-            <img src={`http://localhost:3000/uploads/${currentPhoto}`} alt="Current" width={200} />
+            <img
+              src={`http://localhost:3000/uploads/${currentPhoto}`}
+              alt="Current"
+              width={200}
+            />
           </Box>
         )}
 
@@ -178,7 +190,7 @@ const ProductFormPage: React.FC = () => {
         </Box>
 
         <Box mt={2}>
-            <Typography color={colors.red[500]}>{errorText}</Typography>
+          <Typography color={colors.red[500]}>{errorText}</Typography>
         </Box>
       </Box>
     </Container>

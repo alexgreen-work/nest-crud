@@ -51,7 +51,7 @@ const ProductsPage: React.FC = () => {
   const { data, isLoading, error } = useQuery(
     ['products', queryParams],
     () => fetchProducts(queryParams),
-    { keepPreviousData: true }
+    { keepPreviousData: true },
   );
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
@@ -85,7 +85,9 @@ const ProductsPage: React.FC = () => {
     });
   };
 
-  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRowsPerPageChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setSearchParams({
       ...Object.fromEntries(searchParams.entries()),
       limit: event.target.value,
@@ -110,7 +112,12 @@ const ProductsPage: React.FC = () => {
 
   return (
     <Container>
-      <Box display="flex" justifyContent="space-between" alignItems="center" marginTop={2}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        marginTop={2}
+      >
         <h1>Products</h1>
         <Button variant="contained" onClick={() => navigate('/products/new')}>
           Add Product
@@ -195,7 +202,11 @@ const ProductsPage: React.FC = () => {
                 <TableCell>
                   <TableSortLabel
                     active={sortBy === 'id'}
-                    direction={sortBy === 'id' ? order.toLowerCase() as 'asc' | 'desc' : 'asc'}
+                    direction={
+                      sortBy === 'id'
+                        ? (order.toLowerCase() as 'asc' | 'desc')
+                        : 'asc'
+                    }
                     onClick={() => handleSort('id')}
                   >
                     ID
@@ -204,7 +215,11 @@ const ProductsPage: React.FC = () => {
                 <TableCell>
                   <TableSortLabel
                     active={sortBy === 'name'}
-                    direction={sortBy === 'name' ? order.toLowerCase() as 'asc' | 'desc' : 'asc'}
+                    direction={
+                      sortBy === 'name'
+                        ? (order.toLowerCase() as 'asc' | 'desc')
+                        : 'asc'
+                    }
                     onClick={() => handleSort('name')}
                   >
                     Name
@@ -213,7 +228,11 @@ const ProductsPage: React.FC = () => {
                 <TableCell>
                   <TableSortLabel
                     active={sortBy === 'description'}
-                    direction={sortBy === 'description' ? order.toLowerCase() as 'asc' | 'desc' : 'asc'}
+                    direction={
+                      sortBy === 'description'
+                        ? (order.toLowerCase() as 'asc' | 'desc')
+                        : 'asc'
+                    }
                     onClick={() => handleSort('description')}
                   >
                     Description
@@ -222,7 +241,11 @@ const ProductsPage: React.FC = () => {
                 <TableCell>
                   <TableSortLabel
                     active={sortBy === 'price'}
-                    direction={sortBy === 'price' ? order.toLowerCase() as 'asc' | 'desc' : 'asc'}
+                    direction={
+                      sortBy === 'price'
+                        ? (order.toLowerCase() as 'asc' | 'desc')
+                        : 'asc'
+                    }
                     onClick={() => handleSort('price')}
                   >
                     Price
@@ -231,7 +254,11 @@ const ProductsPage: React.FC = () => {
                 <TableCell>
                   <TableSortLabel
                     active={sortBy === 'discountPrice'}
-                    direction={sortBy === 'discountPrice' ? order.toLowerCase() as 'asc' | 'desc' : 'asc'}
+                    direction={
+                      sortBy === 'discountPrice'
+                        ? (order.toLowerCase() as 'asc' | 'desc')
+                        : 'asc'
+                    }
                     onClick={() => handleSort('discountPrice')}
                   >
                     Discount Price
@@ -240,7 +267,11 @@ const ProductsPage: React.FC = () => {
                 <TableCell>
                   <TableSortLabel
                     active={sortBy === 'sku'}
-                    direction={sortBy === 'sku' ? order.toLowerCase() as 'asc' | 'desc' : 'asc'}
+                    direction={
+                      sortBy === 'sku'
+                        ? (order.toLowerCase() as 'asc' | 'desc')
+                        : 'asc'
+                    }
                     onClick={() => handleSort('sku')}
                   >
                     SKU

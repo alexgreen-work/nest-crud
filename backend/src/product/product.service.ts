@@ -1,5 +1,15 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { Repository, Like, Between, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
+import {
+  Repository,
+  Like,
+  Between,
+  MoreThanOrEqual,
+  LessThanOrEqual,
+} from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -17,9 +27,13 @@ export class ProductService {
   // Создание товара с проверкой на уникальность SKU
   async create(createProductDto: CreateProductDto): Promise<Product> {
     // Проверяем, существует ли уже продукт с таким SKU
-    const existingProduct = await this.productRepository.findOneBy({ sku: createProductDto.sku });
+    const existingProduct = await this.productRepository.findOneBy({
+      sku: createProductDto.sku,
+    });
     if (existingProduct) {
-      throw new BadRequestException(`Product with SKU "${createProductDto.sku}" already exists.`);
+      throw new BadRequestException(
+        `Product with SKU "${createProductDto.sku}" already exists.`,
+      );
     }
     const product = this.productRepository.create(createProductDto);
     return this.productRepository.save(product);
@@ -58,7 +72,10 @@ export class ProductService {
 
     // Фильтрация по диапазону цены со скидкой
     if (query.minDiscountPrice && query.maxDiscountPrice) {
-      where.discountPrice = Between(Number(query.minDiscountPrice), Number(query.maxDiscountPrice));
+      where.discountPrice = Between(
+        Number(query.minDiscountPrice),
+        Number(query.maxDiscountPrice),
+      );
     } else if (query.minDiscountPrice) {
       where.discountPrice = MoreThanOrEqual(Number(query.minDiscountPrice));
     } else if (query.maxDiscountPrice) {
@@ -67,7 +84,8 @@ export class ProductService {
 
     // Сортировка
     const sortBy = query.sortBy || 'id';
-    const order = query.order && query.order.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+    const order =
+      query.order && query.order.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
 
     const [data, count] = await this.productRepository.findAndCount({
       where,
@@ -89,7 +107,10 @@ export class ProductService {
   }
 
   // Обновление товара
-  async update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
+  async update(
+    id: number,
+    updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
     const product = await this.findOne(id);
     Object.assign(product, updateProductDto);
     return this.productRepository.save(product);
