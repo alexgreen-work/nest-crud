@@ -139,6 +139,8 @@ const ProductsPage: React.FC = () => {
             variant="outlined"
             size="small"
           />
+        </Box>
+        <Box mt={4} display="flex" flexWrap="wrap" gap={2}>
           <TextField
             name="minPrice"
             label="Min Price"
