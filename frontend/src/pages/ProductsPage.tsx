@@ -184,7 +184,7 @@ const ProductsPage: React.FC = () => {
                     {product.photo && (
                       <img
                         src={`http://localhost:3000/uploads/${product.photo}`}
-                        alt={product.name}
+                        alt={`${product.name} photo`}
                         width={50}
                       />
                     )}

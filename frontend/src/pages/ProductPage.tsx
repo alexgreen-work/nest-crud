@@ -43,7 +43,7 @@ const ProductPage: React.FC = () => {
       )}
       <Typography variant="body2">SKU: {product.sku}</Typography>
       {product.photo && (
-        <img src={`http://localhost:3000/uploads/${product.photo}`} alt={product.name} width={200} />
+        <img src={`http://localhost:3000/uploads/${product.photo}`} alt={`${product.name} photo`} width={200} />
       )}
       <Box marginTop={2}>
         <Button
