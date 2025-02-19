@@ -24,7 +24,15 @@ const ProductsPage: React.FC = () => {
   const limit = Number(searchParams.get('limit')) || 10;
   const sortBy = searchParams.get('sortBy') || 'id';
   const order = (searchParams.get('order') || 'ASC') as 'ASC' | 'DESC';
+
   const name = searchParams.get('name') || '';
+  const description = searchParams.get('description') || '';
+  const sku = searchParams.get('sku') || '';
+  const minPrice = searchParams.get('minPrice') || '';
+  const maxPrice = searchParams.get('maxPrice') || '';
+
+  const minDiscountPrice = searchParams.get('minDiscountPrice') || '';
+  const maxDiscountPrice = searchParams.get('maxDiscountPrice') || '';
 
   const queryParams: ProductQueryParams = {
     page,
@@ -32,6 +40,12 @@ const ProductsPage: React.FC = () => {
     sortBy,
     order,
     name: name || undefined,
+    description: description || undefined,
+    sku: sku || undefined,
+    minPrice: minPrice ? Number(minPrice) : undefined,
+    maxPrice: maxPrice ? Number(maxPrice) : undefined,
+    minDiscountPrice: minDiscountPrice ? Number(minDiscountPrice) : undefined,
+    maxDiscountPrice: maxDiscountPrice ? Number(maxDiscountPrice) : undefined,
   };
 
   const { data, isLoading, error } = useQuery(
@@ -44,11 +58,16 @@ const ProductsPage: React.FC = () => {
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
-    const nameValue = formData.get('name') as string;
     setSearchParams({
       ...Object.fromEntries(searchParams.entries()),
       page: '1',
-      name: nameValue,
+      name: formData.get('name') as string,
+      description: formData.get('description') as string,
+      sku: formData.get('sku') as string,
+      minPrice: formData.get('minPrice') as string,
+      maxPrice: formData.get('maxPrice') as string,
+      minDiscountPrice: formData.get('minDiscountPrice') as string,
+      maxDiscountPrice: formData.get('maxDiscountPrice') as string,
     });
   };
 
@@ -71,7 +90,6 @@ const ProductsPage: React.FC = () => {
     const currentSortBy = searchParams.get('sortBy') || 'id';
     const currentOrder = searchParams.get('order') || 'ASC';
     let newOrder: 'ASC' | 'DESC' = 'ASC';
-
     if (currentSortBy === column) {
       newOrder = currentOrder === 'ASC' ? 'DESC' : 'ASC';
     }
@@ -92,17 +110,68 @@ const ProductsPage: React.FC = () => {
         </Button>
       </Box>
       <form onSubmit={handleSearch} style={{ marginTop: 16, marginBottom: 16 }}>
-        <TextField
-          name="name"
-          label="Search by Name"
-          defaultValue={name}
-          variant="outlined"
-          size="small"
-          style={{ marginRight: 8 }}
-        />
-        <Button type="submit" variant="contained">
-          Search
-        </Button>
+        <Box display="flex" flexWrap="wrap" gap={2}>
+          <TextField
+            name="name"
+            label="Search by Name"
+            defaultValue={name}
+            variant="outlined"
+            size="small"
+          />
+          <TextField
+            name="description"
+            label="Search by Description"
+            defaultValue={description}
+            variant="outlined"
+            size="small"
+          />
+          <TextField
+            name="sku"
+            label="Search by SKU"
+            defaultValue={sku}
+            variant="outlined"
+            size="small"
+          />
+          </Box>
+           <Box display="flex" flexWrap="wrap" mt={4} gap={2}>
+          <TextField
+            name="minPrice"
+            label="Min Price"
+            defaultValue={minPrice}
+            variant="outlined"
+            size="small"
+            type="number"
+          />
+          <TextField
+            name="maxPrice"
+            label="Max Price"
+            defaultValue={maxPrice}
+            variant="outlined"
+            size="small"
+            type="number"
+          />
+          <TextField
+            name="minDiscountPrice"
+            label="Min Discount Price"
+            defaultValue={minDiscountPrice}
+            variant="outlined"
+            size="small"
+            type="number"
+          />
+          <TextField
+            name="maxDiscountPrice"
+            label="Max Discount Price"
+            defaultValue={maxDiscountPrice}
+            variant="outlined"
+            size="small"
+            type="number"
+          />
+        </Box>
+        <Box marginTop={2}>
+          <Button type="submit" variant="contained">
+            Search
+          </Button>
+        </Box>
       </form>
       {isLoading ? (
         <p>Loading...</p>

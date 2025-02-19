@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { Repository, Like } from 'typeorm';
+import { Repository, Like, Between, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -32,10 +32,11 @@ export class ProductService {
     const skip = (page - 1) * limit;
 
     const where: any = {};
+
+    // Фильтрация по текстовым полям
     if (query.name) {
       where.name = Like(`%${query.name}%`);
     }
-
     if (query.description) {
       where.description = Like(`%${query.description}%`);
     }
@@ -46,11 +47,22 @@ export class ProductService {
       where.photo = Like(`%${query.photo}%`);
     }
 
-    if (query.price) {
-      where.price = Number(query.price);
+    // Фильтрация по диапазону цены
+    if (query.minPrice && query.maxPrice) {
+      where.price = Between(Number(query.minPrice), Number(query.maxPrice));
+    } else if (query.minPrice) {
+      where.price = MoreThanOrEqual(Number(query.minPrice));
+    } else if (query.maxPrice) {
+      where.price = LessThanOrEqual(Number(query.maxPrice));
     }
-    if (query.discountPrice) {
-      where.discountPrice = Number(query.discountPrice);
+
+    // Фильтрация по диапазону цены со скидкой
+    if (query.minDiscountPrice && query.maxDiscountPrice) {
+      where.discountPrice = Between(Number(query.minDiscountPrice), Number(query.maxDiscountPrice));
+    } else if (query.minDiscountPrice) {
+      where.discountPrice = MoreThanOrEqual(Number(query.minDiscountPrice));
+    } else if (query.maxDiscountPrice) {
+      where.discountPrice = LessThanOrEqual(Number(query.maxDiscountPrice));
     }
 
     // Сортировка
