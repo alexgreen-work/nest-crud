@@ -1,4 +1,4 @@
-# Project Name
+# Nest Crud
 
 A full-stack application for managing products with CRUD operations, image upload, filtering, sorting, and pagination. This project includes a NestJS backend and a React frontend, all containerized with Docker.
 
@@ -10,10 +10,8 @@ A full-stack application for managing products with CRUD operations, image uploa
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Setup and Installation](#setup-and-installation)
-  - [Running Locally](#running-locally)
   - [Docker Setup](#docker-setup)
 - [Usage](#usage)
-- [Development](#development)
 
 ---
 
