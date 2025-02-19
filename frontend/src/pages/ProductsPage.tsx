@@ -61,13 +61,20 @@ const ProductsPage: React.FC = () => {
     setSearchParams({
       ...Object.fromEntries(searchParams.entries()),
       page: '1',
-      name: formData.get('name') as string,
-      description: formData.get('description') as string,
-      sku: formData.get('sku') as string,
-      minPrice: formData.get('minPrice') as string,
-      maxPrice: formData.get('maxPrice') as string,
-      minDiscountPrice: formData.get('minDiscountPrice') as string,
-      maxDiscountPrice: formData.get('maxDiscountPrice') as string,
+      name: (formData.get('name') as string) || '',
+      description: (formData.get('description') as string) || '',
+      sku: (formData.get('sku') as string) || '',
+      minPrice: (formData.get('minPrice') as string) || '',
+      maxPrice: (formData.get('maxPrice') as string) || '',
+      minDiscountPrice: (formData.get('minDiscountPrice') as string) || '',
+      maxDiscountPrice: (formData.get('maxDiscountPrice') as string) || '',
+    });
+  };
+
+  const handleClearFilters = () => {
+    setSearchParams({
+      page: '1',
+      limit: limit.toString(),
     });
   };
 
@@ -132,8 +139,6 @@ const ProductsPage: React.FC = () => {
             variant="outlined"
             size="small"
           />
-          </Box>
-           <Box display="flex" flexWrap="wrap" mt={4} gap={2}>
           <TextField
             name="minPrice"
             label="Min Price"
@@ -167,9 +172,12 @@ const ProductsPage: React.FC = () => {
             type="number"
           />
         </Box>
-        <Box marginTop={2}>
+        <Box display="flex" marginTop={2} gap={2}>
           <Button type="submit" variant="contained">
             Search
+          </Button>
+          <Button variant="outlined" onClick={handleClearFilters}>
+            Clear Filters
           </Button>
         </Box>
       </form>
@@ -237,7 +245,7 @@ const ProductsPage: React.FC = () => {
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>Photo</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell width={200}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
